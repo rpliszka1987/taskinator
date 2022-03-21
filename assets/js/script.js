@@ -1,3 +1,5 @@
+
+var pageContentEl = document.querySelector("#page-content");
 // Task id number variable
 var taskIdCounter = 0;
 
@@ -5,6 +7,23 @@ var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 // Targets the ul list
 var tasksToDoEl = document.querySelector("#tasks-to-do");
+
+var deleteTask = function(taskId) {
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    taskSelected.remove();
+};
+
+var taskButtonHandler = function(event) {
+    console.log(event.target);
+
+    if (event.target.matches(".delete-btn")) {
+        // get the element's task id
+        var taskId = event.target.getAttribute("data-task-id");
+        deleteTask(taskId);
+    }
+};
+
+
 
 
 var taskFormHandler = function (event) {
@@ -18,7 +37,7 @@ var taskFormHandler = function (event) {
 
     // check if input values are empty stings
     if (!taskNameInput || !taskTypeInput) {
-        alert("You need to dill out the task form!");
+        alert("You need to fill out the task form!");
         return false;
     }
 
@@ -103,4 +122,7 @@ var createTaskActions = function(taskId) {
     return actionContainerEl;
 };
 
+
+
 formEl.addEventListener("submit", taskFormHandler);
+pageContentEl.addEventListener("click", taskButtonHandler);
